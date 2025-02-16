@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Apartment Investment Model Calculator</title>
+  <style>
+    /* Global Styles & Resets */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+    h1, h2, h3 {
+      text-align: center;
+      color: #333;
+    }
+    p.description {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.1em;
+      color: #555;
+    }
+    
+    /* Card Layout for Sections */
+    .card {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .card h3 {
+      margin-top: 0;
+      color: #FF5A5F; /* Airbnb red accent */
+      border-bottom: 2px solid #FF5A5F;
+      padding-bottom: 5px;
+    }
+    
+    /* Table styling for input fields */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+    }
+    th, td {
+      padding: 8px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+    th {
+      background-color: #f0f0f0;
+      font-weight: bold;
+    }
+    input[type="number"] {
+      width: 80px;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      transition: border-color 0.3s ease;
+    }
+    input[type="number"]:focus {
+      border-color: #FF5A5F;
+      outline: none;
+    }
+    
+    /* Calculate Button */
+    .calculate-btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      font-size: 1.2em;
+      background-color: #FF5A5F;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin: 20px 0;
+    }
+    .calculate-btn:hover {
+      background-color: #e14b4e;
+    }
+    
+    /* Results Table */
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .results-table th, .results-table td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    .results-table th {
+      background-color: #f0f0f0;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      th, td {
+        font-size: 0.9em;
+      }
+      input[type="number"] {
+        width: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Top Header -->
+    <header>
+      <h1>Apartment Investment Model Calculator</h1>
+      <p class="description">
+        Use this calculator to estimate the ROI for different apartment types based on your global, seasonal, and apartment-specific assumptions.
+      </p>
+    </header>
+    
+    <!-- Global Assumptions Section -->
+    <div class="card">
+      <h3>Global Assumptions</h3>
+      <table>
+        <tr>
+          <th>Price per m² (CHF)</th>
+          <th>Down Payment (%)</th>
+          <th>Interest Rate (%)</th>
+          <th>Operating Expense Rate (%)</th>
+        </tr>
+        <tr>
+          <td><input type="number" id="pricePerM2" value="15000"></td>
+          <td><input type="number" id="downPaymentPerc" value="20"></td>
+          <td><input type="number" id="interestRate" value="1.5" step="0.1"></td>
+          <td><input type="number" id="expenseRate" value="25" step="0.1"></td>
+        </tr>
+      </table>
+    </div>
+    
+    <!-- Seasonal Assumptions Section -->
+    <div class="card">
+      <h3>Seasonal Assumptions</h3>
+      <table>
+        <tr>
+          <th>Low Season (days)</th>
+          <th>Shoulder Season (days)</th>
+          <th>Peak Season (days)</th>
+          <th>Low Season Occupancy (%)</th>
+          <th>Shoulder Season Occupancy (%)</th>
+          <th>Peak Season Occupancy (%)</th>
+        </tr>
+        <tr>
+          <td><input type="number" id="lowDuration" value="120"></td>
+          <td><input type="number" id="shoulderDuration" value="120"></td>
+          <td><input type="number" id="peakDuration" value="120"></td>
+          <td><input type="number" id="lowOccupancy" value="40"></td>
+          <td><input type="number" id="shoulderOccupancy" value="50"></td>
+          <td><input type="number" id="peakOccupancy" value="70"></td>
+        </tr>
+      </table>
+    </div>
+    
+    <!-- Apartment Assumptions Section -->
+    <div class="card">
+      <h3>Apartment Assumptions</h3>
+      <table>
+        <tr>
+          <th>Parameter</th>
+          <th>2.5‑Room</th>
+          <th>3.5‑Room</th>
+          <th>4.5‑Room</th>
+        </tr>
+        <tr>
+          <td>Size (m²)</td>
+          <td><input type="number" id="size2_5" value="60"></td>
+          <td><input type="number" id="size3_5" value="90"></td>
+          <td><input type="number" id="size4_5" value="130"></td>
+        </tr>
+        <tr>
+          <td>Low Season ADR (CHF/night)</td>
+          <td><input type="number" id="adr2_5_low" value="130"></td>
+          <td><input type="number" id="adr3_5_low" value="150"></td>
+          <td><input type="number" id="adr4_5_low" value="170"></td>
+        </tr>
+        <tr>
+          <td>Shoulder Season ADR (CHF/night)</td>
+          <td><input type="number" id="adr2_5_shoulder" value="160"></td>
+          <td><input type="number" id="adr3_5_shoulder" value="200"></td>
+          <td><input type="number" id="adr4_5_shoulder" value="230"></td>
+        </tr>
+        <tr>
+          <td>Peak Season ADR (CHF/night)</td>
+          <td><input type="number" id="adr2_5_peak" value="190"></td>
+          <td><input type="number" id="adr3_5_peak" value="260"></td>
+          <td><input type="number" id="adr4_5_peak" value="300"></td>
+        </tr>
+      </table>
+    </div>
+    
+    <!-- Calculate Button -->
+    <button class="calculate-btn" onclick="calculateModel()">Calculate</button>
+    
+    <!-- Results Section -->
+    <div id="results"></div>
+    
+    <!-- JavaScript for Calculations -->
+    <script>
+      // Function to calculate the investment model based on user input
+      function calculateModel() {
+        // Global inputs
+        const pricePerM2 = parseFloat(document.getElementById('pricePerM2').value);
+        const downPaymentPerc = parseFloat(document.getElementById('downPaymentPerc').value);
+        const interestRate = parseFloat(document.getElementById('interestRate').value);
+        const expenseRate = parseFloat(document.getElementById('expenseRate').value) / 100;
+        const lowDuration = parseFloat(document.getElementById('lowDuration').value);
+        const shoulderDuration = parseFloat(document.getElementById('shoulderDuration').value);
+        const peakDuration = parseFloat(document.getElementById('peakDuration').value);
+        const lowOccupancy = parseFloat(document.getElementById('lowOccupancy').value) / 100;
+        const shoulderOccupancy = parseFloat(document.getElementById('shoulderOccupancy').value) / 100;
+        const peakOccupancy = parseFloat(document.getElementById('peakOccupancy').value) / 100;
+        
+        // Helper function: Calculate seasonal gross revenue based on ADRs
+        function seasonalRevenue(adrLow, adrShoulder, adrPeak) {
+          const bookedLow = lowDuration * lowOccupancy;
+          const bookedShoulder = shoulderDuration * shoulderOccupancy;
+          const bookedPeak = peakDuration * peakOccupancy;
+          const revenueLow = bookedLow * adrLow;
+          const revenueShoulder = bookedShoulder * adrShoulder;
+          const revenuePeak = bookedPeak * adrPeak;
+          return revenueLow + revenueShoulder + revenuePeak;
+        }
+        
+        // Calculations for 2.5‑Room Apartment
+        const size2_5 = parseFloat(document.getElementById('size2_5').value);
+        const adr2_5_low = parseFloat(document.getElementById('adr2_5_low').value);
+        const adr2_5_shoulder = parseFloat(document.getElementById('adr2_5_shoulder').value);
+        const adr2_5_peak = parseFloat(document.getElementById('adr2_5_peak').value);
+        const purchasePrice2_5 = size2_5 * pricePerM2;
+        const downPayment2_5 = purchasePrice2_5 * (downPaymentPerc / 100);
+        const financed2_5 = purchasePrice2_5 - downPayment2_5;
+        const grossRev2_5 = seasonalRevenue(adr2_5_low, adr2_5_shoulder, adr2_5_peak);
+        const NOI2_5 = grossRev2_5 * (1 - expenseRate);
+        const interest2_5 = financed2_5 * (interestRate / 100);
+        const cashFlow2_5 = NOI2_5 - interest2_5;
+        const cashOnCash2_5 = (cashFlow2_5 / downPayment2_5) * 100;
+        const capRate2_5 = (NOI2_5 / purchasePrice2_5) * 100;
+        
+        // Calculations for 3.5‑Room Apartment
+        const size3_5 = parseFloat(document.getElementById('size3_5').value);
+        const adr3_5_low = parseFloat(document.getElementById('adr3_5_low').value);
+        const adr3_5_shoulder = parseFloat(document.getElementById('adr3_5_shoulder').value);
+        const adr3_5_peak = parseFloat(document.getElementById('adr3_5_peak').value);
+        const purchasePrice3_5 = size3_5 * pricePerM2;
+        const downPayment3_5 = purchasePrice3_5 * (downPaymentPerc / 100);
+        const financed3_5 = purchasePrice3_5 - downPayment3_5;
+        const grossRev3_5 = seasonalRevenue(adr3_5_low, adr3_5_shoulder, adr3_5_peak);
+        const NOI3_5 = grossRev3_5 * (1 - expenseRate);
+        const interest3_5 = financed3_5 * (interestRate / 100);
+        const cashFlow3_5 = NOI3_5 - interest3_5;
+        const cashOnCash3_5 = (cashFlow3_5 / downPayment3_5) * 100;
+        const capRate3_5 = (NOI3_5 / purchasePrice3_5) * 100;
+        
+        // Calculations for 4.5‑Room Apartment
+        const size4_5 = parseFloat(document.getElementById('size4_5').value);
+        const adr4_5_low = parseFloat(document.getElementById('adr4_5_low').value);
+        const adr4_5_shoulder = parseFloat(document.getElementById('adr4_5_shoulder').value);
+        const adr4_5_peak = parseFloat(document.getElementById('adr4_5_peak').value);
+        const purchasePrice4_5 = size4_5 * pricePerM2;
+        const downPayment4_5 = purchasePrice4_5 * (downPaymentPerc / 100);
+        const financed4_5 = purchasePrice4_5 - downPayment4_5;
+        const grossRev4_5 = seasonalRevenue(adr4_5_low, adr4_5_shoulder, adr4_5_peak);
+        const NOI4_5 = grossRev4_5 * (1 - expenseRate);
+        const interest4_5 = financed4_5 * (interestRate / 100);
+        const cashFlow4_5 = NOI4_5 - interest4_5;
+        const cashOnCash4_5 = (cashFlow4_5 / downPayment4_5) * 100;
+        const capRate4_5 = (NOI4_5 / purchasePrice4_5) * 100;
+        
+        // Build results table (apartment type as columns, parameters as rows)
+        let output = `<h2>Investment Model Results</h2>
+        <table class="results-table">
+          <tr>
+            <th>Parameter</th>
+            <th>2.5‑Room</th>
+            <th>3.5‑Room</th>
+            <th>4.5‑Room</th>
+          </tr>
+          <tr>
+            <td>Size (m²)</td>
+            <td>${size2_5}</td>
+            <td>${size3_5}</td>
+            <td>${size4_5}</td>
+          </tr>
+          <tr>
+            <td>Purchase Price (CHF)</td>
+            <td>${purchasePrice2_5.toFixed(0)}</td>
+            <td>${purchasePrice3_5.toFixed(0)}</td>
+            <td>${purchasePrice4_5.toFixed(0)}</td>
+          </tr>
+          <tr>
+            <td>Down Payment (CHF)</td>
+            <td>${downPayment2_5.toFixed(0)}</td>
+            <td>${downPayment3_5.toFixed(0)}</td>
+            <td>${downPayment4_5.toFixed(0)}</td>
+          </tr>
+          <tr>
+            <td>Annual Gross Revenue (CHF)</td>
+            <td>${grossRev2_5.toFixed(0)}</td>
+            <td>${grossRev3_5.toFixed(0)}</td>
+            <td>${grossRev4_5.toFixed(0)}</td>
+          </tr>
+          <tr>
+            <td>NOI (CHF)</td>
+            <td>${NOI2_5.toFixed(0)}</td>
+            <td>${NOI3_5.toFixed(0)}</td>
+            <td>${NOI4_5.toFixed(0)}</td>
+          </tr>
+          <tr>
+            <td>Mortgage Interest (CHF)</td>
+            <td>${interest2_5.toFixed(0)}</td>
+            <td>${interest3_5.toFixed(0)}</td>
+            <td>${interest4_5.toFixed(0)}</td>
+          </tr>
+          <tr>
+            <td>Annual Cash Flow (CHF)</td>
+            <td>${cashFlow2_5.toFixed(0)}</td>
+            <td>${cashFlow3_5.toFixed(0)}</td>
+            <td>${cashFlow4_5.toFixed(0)}</td>
+          </tr>
+          <tr>
+            <td>Cash-on-Cash ROI (%)</td>
+            <td>${cashOnCash2_5.toFixed(2)}%</td>
+            <td>${cashOnCash3_5.toFixed(2)}%</td>
+            <td>${cashOnCash4_5.toFixed(2)}%</td>
+          </tr>
+          <tr>
+            <td>Cap Rate (%)</td>
+            <td>${capRate2_5.toFixed(2)}%</td>
+            <td>${capRate3_5.toFixed(2)}%</td>
+            <td>${capRate4_5.toFixed(2)}%</td>
+          </tr>
+        </table>`;
+        
+        document.getElementById('results').innerHTML = output;
+      }
+    </script>
+  </div>
+</body>
+</html>

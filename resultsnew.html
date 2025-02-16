@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>New Model Results</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="manifest" href="manifest.json" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>New Model Results</h1>
+    </header>
+
+    <!-- Season Breakdown -->
+    <section id="seasonBreakdown">
+      <h2>Breakdown by Season</h2>
+    </section>
+
+    <!-- Base Model -->
+    <section id="baseModel">
+      <h2>Base Model Results</h2>
+    </section>
+  </div>
+
+  <!-- Sensitivity Analysis -->
+  <div class="sensitivity-wrapper">
+    <section id="sensitivityModel">
+      <h2>Detailed Sensitivity Analysis</h2>
+    </section>
+
+    <button class="calculate-btn" onclick="goBack()">Back</button>
+  </div>
+
+  <script>
+    function displayResults() {
+      // Read from localStorage (same keys used by your new model):
+      const seasonBreakdown = localStorage.getItem("seasonBreakdownResults");
+      const baseResults     = localStorage.getItem("baseResults");
+      const detailedSens    = localStorage.getItem("detailedSensitivity");
+
+      // Insert into page
+      const seasonBreakdownSection = document.getElementById("seasonBreakdown");
+      seasonBreakdownSection.innerHTML += seasonBreakdown 
+        ? seasonBreakdown
+        : "<p>No breakdown by season found.</p>";
+
+      const baseSection = document.getElementById("baseModel");
+      baseSection.innerHTML += baseResults 
+        ? baseResults
+        : "<p>No base results found.</p>";
+
+      const sensitivitySection = document.getElementById("sensitivityModel");
+      sensitivitySection.innerHTML += detailedSens 
+        ? detailedSens
+        : "<p>No sensitivity analysis found.</p>";
+    }
+
+    function goBack() {
+      window.location.href = "apartmentModelling.html";
+    }
+
+    // Call on load
+    displayResults();
+  </script>
+</body>
+</html>

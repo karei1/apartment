@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Apartment Investment Model Calculator - Home</title>
+  <!-- Link to shared CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- Link to the web app manifest -->
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Apartment Investment Model Calculator</h1>
+      <p class="description">
+        Welcome to our Progressive Web App for modeling and calculating ROI for investment apartments. Use our tool to analyze different apartment types based on your global and seasonal assumptions.
+      </p>
+    </header>
+    
+    <nav class="menu">
+      <ul>
+        <li><a href="apartmentModelling.html">Apartment Modelling</a></li>
+        <!-- Future menu items can be added here -->
+      </ul>
+    </nav>
+    
+    <footer class="footer">
+      <p>&copy; 2025 Create Apps. All rights reserved.</p>
+    </footer>
+  </div>
+  
+  <!-- Link to shared JS file -->
+  <script src="js/app.js"></script>
+  <!-- Register Service Worker for PWA functionality -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('sw.js').then(function(registration) {
+          console.log('ServiceWorker registration successful with scope:', registration.scope);
+        }, function(err) {
+          console.log('ServiceWorker registration failed:', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

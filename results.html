@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Investment Model Results</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="manifest" href="manifest.json" />
+</head>
+<body>
+  <!-- Container for the base model: fixed width ~900px -->
+  <div class="container">
+    <header>
+      <h1>Investment Model Results</h1>
+    </header>
+
+       <!-- Breakdown by Season Section -->
+       <section id="seasonBreakdown">
+        <h2>Breakdown by Season</h2>
+      </section>
+
+    <!-- Base Model Section -->
+    <section id="baseModel">
+      <h2>Base Model Results</h2>
+      <!-- Single grouped table for the base model goes here -->
+    </section>
+    
+ 
+  </div>
+  
+  <!-- Separate wrapper for the Sensitivity Model that can stretch or scroll -->
+  <div class="sensitivity-wrapper">
+    <section id="sensitivityModel">
+      <h2>Detailed Sensitivity Analysis</h2>
+      <!-- Wider sensitivity tables go here -->
+    </section>
+
+    <button class="calculate-btn" onclick="goBack()">Back</button>
+    
+  </div>
+  
+  <script>
+    function displayResults() {
+      const seasonBreakdown = localStorage.getItem("seasonBreakdownResults");
+      const baseResults = localStorage.getItem("baseResults");
+      const detailedSensitivity = localStorage.getItem("detailedSensitivity");
+      
+
+            // Put the base model in the ~900px container
+            const seasonBreakdownSection = document.getElementById("seasonBreakdown");
+            if (seasonBreakdown) {
+        seasonBreakdownSection.innerHTML += seasonBreakdown;
+      } else {
+        seasonBreakdownSection.innerHTML += "<p>No breakdown by season found. Please calculate your model.</p>";
+      }
+
+
+      // Put the base model in the ~900px container
+      const baseSection = document.getElementById("baseModel");
+      if (baseResults) {
+        baseSection.innerHTML += baseResults;
+      } else {
+        baseSection.innerHTML += "<p>No base results found. Please calculate your model.</p>";
+      }
+      
+      // Put the sensitivity model in the wider wrapper
+      const sensitivitySection = document.getElementById("sensitivityModel");
+      if (detailedSensitivity) {
+        sensitivitySection.innerHTML += detailedSensitivity;
+      } else {
+        sensitivitySection.innerHTML += "<p>No sensitivity analysis found.</p>";
+      }
+    }
+    
+    function goBack() {
+      window.location.href = "apartmentModelling.html";
+    }
+    
+    // Call displayResults on page load
+    displayResults();
+  </script>
+</body>
+</html>
